@@ -1,0 +1,24 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "no_arr": "05", "nom_qr": "Outremont", "nom_arr": "Outremont", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.608646243100594, 45.51564084775088 ] } },
+{ "type": "Feature", "properties": { "no_arr": "09", "nom_qr": "Anjou", "nom_arr": "Anjou", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.565378022899239, 45.61250248953921 ] } },
+{ "type": "Feature", "properties": { "no_arr": "12", "nom_qr": "Desmarchais-Crawford", "nom_arr": "Verdun", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.581631422657097, 45.445541137512315 ] } },
+{ "type": "Feature", "properties": { "no_arr": "14", "nom_qr": "Grande-Prairie", "nom_arr": "Saint-Léonard", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.589260786282068, 45.595237410706623 ] } },
+{ "type": "Feature", "properties": { "no_arr": "15", "nom_qr": "Chameran/Montpellier", "nom_arr": "Saint-Laurent", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.673608530109419, 45.523472702349352 ] } },
+{ "type": "Feature", "properties": { "no_arr": "16", "nom_qr": "Est", "nom_arr": "Montréal-Nord", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.618006597579637, 45.616067473996964 ] } },
+{ "type": "Feature", "properties": { "no_arr": "17", "nom_qr": "Sault-Saint-Louis", "nom_arr": "LaSalle", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.613795029173616, 45.427008817054919 ] } },
+{ "type": "Feature", "properties": { "no_arr": "19", "nom_qr": "Montagne", "nom_arr": "Ville-Marie", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.587570749129469, 45.501207365600209 ] } },
+{ "type": "Feature", "properties": { "no_arr": "20", "nom_qr": "Ville-Émard", "nom_arr": "Le Sud-Ouest", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.601495098587037, 45.449791539897404 ] } },
+{ "type": "Feature", "properties": { "no_arr": "21", "nom_qr": "Lorimier", "nom_arr": "Le Plateau-Mont-Royal", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.571150662199244, 45.536438985601009 ] } },
+{ "type": "Feature", "properties": { "no_arr": "22", "nom_qr": "Beaurivage", "nom_arr": "Mercier–Hochelaga-Maisonneuve", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.513009672093261, 45.596042639223519 ] } },
+{ "type": "Feature", "properties": { "no_arr": "23", "nom_qr": "Sault-au-Récollet", "nom_arr": "Ahuntsic-Cartierville", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.660372919882022, 45.558141477067089 ] } },
+{ "type": "Feature", "properties": { "no_arr": "24", "nom_qr": "Marie-Victorin", "nom_arr": "Rosemont–La Petite-Patrie", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.567214024644258, 45.568928600276614 ] } },
+{ "type": "Feature", "properties": { "no_arr": "25", "nom_qr": "René-Goupil", "nom_arr": "Villeray–Saint-Michel–Parc-Extension", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.614852883265741, 45.578545202944511 ] } },
+{ "type": "Feature", "properties": { "no_arr": "27", "nom_qr": "Lachine-Ouest", "nom_arr": "Lachine", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.705412479441662, 45.441786384430884 ] } },
+{ "type": "Feature", "properties": { "no_arr": "31", "nom_qr": "Pierrefonds-Ouest", "nom_arr": "Pierrefonds-Roxboro", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.897552330149708, 45.462572801950103 ] } },
+{ "type": "Feature", "properties": { "no_arr": "32", "nom_qr": "L'Île-Bizard–Sainte-Geneviève", "nom_arr": "L'Île-Bizard–Sainte-Geneviève", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.895595081670351, 45.493906515748776 ] } },
+{ "type": "Feature", "properties": { "no_arr": "33", "nom_qr": "Rivière-des-Prairies", "nom_arr": "Rivière-des-Prairies–Pointe-aux-Trembles", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.543494880984738, 45.663581304151222 ] } },
+{ "type": "Feature", "properties": { "no_arr": "34", "nom_qr": "Savane", "nom_arr": "Côte-des-Neiges–Notre-Dame-de-Grâce", "nom_mun": "Montréal" }, "geometry": { "type": "Point", "coordinates": [ -73.651224377071713, 45.493698812695293 ] } }
+]
+}
