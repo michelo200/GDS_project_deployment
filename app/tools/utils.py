@@ -267,13 +267,11 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
     
     distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
     distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
-    st.write(distances)
     
     # Plot the graph with a light background
     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
     
     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
-    st.write(nodes_proj)
     
     # Merge the nodes_proj and distances DataFrames based on a common key
     # merged_data = nodes_proj.merge(distances, left_on='osmid', right_on='node')
@@ -288,14 +286,25 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
     st.pyplot(fig)
 
     
-#OLD VERSION
-# def plot_neighborhood_graph(mode_of_transportation_graph, mode_of_transportation_distances, neighbourhood):
+# #OLD VERSION
+# def plot_neighborhood_graph(mot, mot_distances, neighbourhood, amenity, graphs_dict):
 #     # Load the graph from the specified place and network type
-#     G = mode_of_transportation_graph
+#     # G = mot_graph
+#     # Load the appropriate graph based on the transportation type
+#     if mot == "walking":
+#         G = graphs_dict["walking"][f"{neighbourhood}, Montreal, Canada"]
+#     elif mot == "driving":
+#         G = graphs_dict["driving"][f"{neighbourhood}, Montreal, Canada"]
+#     elif mot == "biking":
+#         G = graphs_dict["biking"][f"{neighbourhood}, Montreal, Canada"]
+    
+#     st.write(G)
+    
 #     # CRS
 #     G_proj = ox.project_graph(G)
     
-#     distances = mode_of_transportation_distances[f"{neighbourhood}, Montreal, Canada"]
+#     distances = mot_distances[mot_distances["amenity"] == amenity]
+#     distances = distances[f"{neighbourhood}, Montreal, Canada"]
     
 #     # Plot the graph with a light background
 #     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
@@ -310,7 +319,7 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
 #     plt.colorbar(sc, ax=ax, shrink=0.7)
     
 #     # Show the plot
-#     plt.show()
+#     st.pyplot(fig)
 
 #     # example usage
 #     # plot_neighborhood_graph(G_walk_anjou, 'Anjou')
