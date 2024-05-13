@@ -220,7 +220,38 @@ def amenity_distances_map():
 
 
 # used in neighbourhood analysis
-import os
+# def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_transportation, graphs_dict, amenity):
+    
+#     # Load the appropriate graph based on the transportation type
+#     if transportation_type == "walking":
+#         G = graphs_dict["walking"][f"{neighbourhood}, Montreal, Canada"]
+#     elif transportation_type == "driving":
+#         G = graphs_dict["driving"][f"{neighbourhood}, Montreal, Canada"]
+#     elif transportation_type == "biking":
+#         G = graphs_dict["biking"][f"{neighbourhood}, Montreal, Canada"]
+    
+#     # CRS
+#     G_proj = ox.project_graph(G)
+    
+#     distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
+#     distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
+#     # distances = distances_by_transportation[amenity][f"{neighbourhood}, Montreal, Canada"]
+    
+#     # Plot the graph with a light background
+#     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
+    
+#     # Assuming 'nodes_anjou' is a DataFrame containing node positions and 'distances_anjou' contains the data to plot
+#     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
+    
+#     # Scatter plot on the same Axes instance
+#     sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=30, cmap='inferno_r', alpha=0.8)
+    
+#     # Add colorbar
+#     plt.colorbar(sc, ax=ax, shrink=0.7)
+    
+#     # Show the plot
+#     st.pyplot(fig)
+    
 def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_transportation, graphs_dict, amenity):
     
     # Load the appropriate graph based on the transportation type
@@ -236,13 +267,16 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
     
     distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
     distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
-    # distances = distances_by_transportation[amenity][f"{neighbourhood}, Montreal, Canada"]
+    st.write(distances)
     
     # Plot the graph with a light background
     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
     
-    # Assuming 'nodes_anjou' is a DataFrame containing node positions and 'distances_anjou' contains the data to plot
     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
+    st.write(nodes_proj)
+    
+    # Merge the nodes_proj and distances DataFrames based on a common key
+    # merged_data = nodes_proj.merge(distances, left_on='osmid', right_on='node')
     
     # Scatter plot on the same Axes instance
     sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=30, cmap='inferno_r', alpha=0.8)
@@ -252,6 +286,7 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
     
     # Show the plot
     st.pyplot(fig)
+
     
 #OLD VERSION
 # def plot_neighborhood_graph(mode_of_transportation_graph, mode_of_transportation_distances, neighbourhood):
