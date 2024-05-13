@@ -1,9 +1,29 @@
 import streamlit as st
+import pandas as pd
+from tools.ui_utils import (
+    add_logo,
+    ui_setup
+)
 
+st.set_page_config(page_title='Montreal-15-minute-city', page_icon=":earth_americas:",layout="wide")
 
-st.set_page_config(page_title='15-minute-city: Best location', page_icon=":earth_americas:",layout="wide")
+montreal_map = pd.DataFrame({
+'lat': [45.5017],
+'lon': [-73.5673]
+})
 
-st.subheader("Welcome to streamlit - a framework to develop Python apps fast")
-st.write("For our demo app we chose this setup to distribute our solution in an easy way.")
+add_logo()
+ui_setup()
+
+st.title("MONTREAL - A 15-MINUTE CITY?")
+st.subheader("A Geospatial Data Science project at ITU Copenhagen")
+st.write("**May 2024**")
+st.write("**Authors:** Emma, Caro, and Michel")
+st.write("This project serves as a inspiration for people, who want to move or relocate in Montreal. Based on the concept of the 15-minute city we want to help finding the best spot within the city. Users are able to choose which **mode of transportation** they want to use and which **amenity** is most important to them.")
+
+st.divider()
+st.write("Now it's up to you - walk through the app pages and analyse the city. We'll provide you with the best living locations.")
+
+st.map(montreal_map, zoom=10)
 
 st.sidebar.write("Choose different site options above.")

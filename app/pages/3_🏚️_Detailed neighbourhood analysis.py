@@ -35,8 +35,14 @@ def get_graph(mode_of_transportation, neighbourhood):
 
 # store all neighborhoods
 amenities_with_neighborhood = gpd.read_file('../dataframes/amenities_with_neighborhood.geojson')
+
 neighbourhoods = list(amenities_with_neighborhood['Arrondissement'].unique())[:-1]
 neighbourhoods = [item.split(',')[0] for item in neighbourhoods]
+
+amenities = amenities_with_neighborhood.amenity.unique()
+
+# WORK ONWARDS FROM HERE
+
 
 # read in all pre-calculated distances here already (for walk, drive, bike)
 # distances = pd.read_csv('../dataframes/distances.csv')
@@ -44,10 +50,10 @@ neighbourhoods = [item.split(',')[0] for item in neighbourhoods]
 
 with st.sidebar:
     st.session_state["mode_of_transportation"] = st.selectbox("Mode of transportation",
-                                                            ("Walking", "Biking", "Driving",),
+                                                            ("walking", "biking", "driving",),
                                                             placeholder = "Select a mode of transportation.")
     st.session_state["amenity"] = st.selectbox("Amenity",
-                                            ("Supermarket", "Pharmacy", "General practitioner", "School/university", "Café", "Park/green area", "Public water access", "Library", "Place of worship", "Bar", "Restaurants"),
+                                            amenities,
                                             placeholder="Select your amenity of interest.")
     
     st.session_state["neighbourhood"] = st.selectbox("Neighbourhood",
