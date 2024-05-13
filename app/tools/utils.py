@@ -68,49 +68,7 @@ def amenity_dataframe():
     with col2:
         st.dataframe(data=filtered_df, hide_index=True, use_container_width=True)
 
-
-
-    # def reset_selections():
-    #     category_selectbox = ''
-    #     amenity_selectbox = ''
-    #     neighbourhood_selectbox = ''
-
-    # col1, col2, col3 = st.columns(3)
-    # with col1: 
-    #     category_selectbox = st.selectbox("Select a category", [''] + categories, key='option1')
-        
-    #     start_filter_button = st.button("Use these filters", key="start_filter")
-            
-    # with col2:
-    #     amenity_selectbox = st.selectbox("Select an amenity", [''] + amenities, key='option2')
-        
-    #     if st.button('Reset filters', key="reset_filter"):
-    #         reset_selections()
-    #         category_selectbox = ''
-    #         amenity_selectbox = ''
-    #         neighbourhood_selectbox = ''
-        
-    # with col3:
-    #     neighbourhood_selectbox = st.selectbox("Select a neighbourhood", [''] + neighbourhoods, key='option3')
-
-    # # Apply filters based on selected options
-    # if start_filter_button:
-    #     filtered_df = df.copy()
-        
-    #     if category_selectbox:
-    #         filtered_df = filtered_df[filtered_df['category'] == category_selectbox]
-        
-    #     if amenity_selectbox:
-    #         filtered_df = filtered_df[filtered_df['amenity'] == amenity_selectbox]
-        
-    #     if neighbourhood_selectbox:
-    #         filtered_df = filtered_df[filtered_df['neighbourhood'] == neighbourhood_selectbox]
-        
-    #     st.dataframe(data=filtered_df, hide_index=True, use_container_width=True)
-    # else:
-    #     st.dataframe(data=df, hide_index=True, use_container_width=True)
-
-
+    st.divider()
     
     st.page_link(page = "https://www.google.com/maps/@45.5508466,-73.6543288,10.75z?entry=ttu", label="Open Google Maps for location lookup.", icon="📍")
 
@@ -262,13 +220,23 @@ def amenity_distances_map():
 
 
 # used in neighbourhood analysis
-def plot_neighborhood_graph(mode_of_transportation_graph, mode_of_transportation_distances, neighbourhood):
-    # Load the graph from the specified place and network type
-    G = mode_of_transportation_graph
+import os
+def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_transportation, graphs_dict, amenity):
+    
+    # Load the appropriate graph based on the transportation type
+    if transportation_type == "walking":
+        G = graphs_dict["walking"][f"{neighbourhood}, Montreal, Canada"]
+    elif transportation_type == "driving":
+        G = graphs_dict["driving"][f"{neighbourhood}, Montreal, Canada"]
+    elif transportation_type == "biking":
+        G = graphs_dict["biking"][f"{neighbourhood}, Montreal, Canada"]
+    
     # CRS
     G_proj = ox.project_graph(G)
     
-    distances = mode_of_transportation_distances[f"{neighbourhood}, Montreal, Canada"]
+    distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
+    distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
+    # distances = distances_by_transportation[amenity][f"{neighbourhood}, Montreal, Canada"]
     
     # Plot the graph with a light background
     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
@@ -277,13 +245,37 @@ def plot_neighborhood_graph(mode_of_transportation_graph, mode_of_transportation
     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
     
     # Scatter plot on the same Axes instance
-    sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=50, cmap='inferno_r', alpha=0.8)
+    sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=30, cmap='inferno_r', alpha=0.8)
     
     # Add colorbar
     plt.colorbar(sc, ax=ax, shrink=0.7)
     
     # Show the plot
-    plt.show()
+    st.pyplot(fig)
+    
+#OLD VERSION
+# def plot_neighborhood_graph(mode_of_transportation_graph, mode_of_transportation_distances, neighbourhood):
+#     # Load the graph from the specified place and network type
+#     G = mode_of_transportation_graph
+#     # CRS
+#     G_proj = ox.project_graph(G)
+    
+#     distances = mode_of_transportation_distances[f"{neighbourhood}, Montreal, Canada"]
+    
+#     # Plot the graph with a light background
+#     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
+    
+#     # Assuming 'nodes_anjou' is a DataFrame containing node positions and 'distances_anjou' contains the data to plot
+#     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
+    
+#     # Scatter plot on the same Axes instance
+#     sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=50, cmap='inferno_r', alpha=0.8)
+    
+#     # Add colorbar
+#     plt.colorbar(sc, ax=ax, shrink=0.7)
+    
+#     # Show the plot
+#     plt.show()
 
-    # example usage
-    # plot_neighborhood_graph(G_walk_anjou, 'Anjou')
+#     # example usage
+#     # plot_neighborhood_graph(G_walk_anjou, 'Anjou')
