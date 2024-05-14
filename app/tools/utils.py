@@ -11,6 +11,7 @@ import pandana as pdna
 import os
 
 
+# used in welcome view
 def init_walking_dist():
     place = 'Montreal, Canada'
     # list_of_amenities = ['restaurant', 'cafe', 'pharmacy', 'hospital', 'parking']
