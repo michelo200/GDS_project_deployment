@@ -41,10 +41,39 @@ amenities = amenities_with_neighborhood.amenity.unique()
 
 
 if "distances_dict" not in st.session_state:
+
+#     def join_large_pickles(read_size=100000000):
+#         combined_dict = dict()
+#         parts = ['../distances/walking_dist1.pkl','../distances/walking_dist2.pkl']
+        
+#         for file in parts:
+#             input_file = open(file, 'rb')
+#             while True:
+#                 bytes = input_file.read(read_size)
+#                 if not bytes:
+#                     break
+#                 combined_dict.update(pickle.load(bytes))
+#             # with open(file, 'rb') as input_file:
+#             #     # Load the dictionary from the pickle file
+#             #     part_dict = pickle.load(input_file)
+                
+#             #     # Merge the dictionaries
+#             #     combined_dict.update(part_dict)
+        
+#         return combined_dict
+
+#     walking_distances = join_large_pickles()
+    walking_distances = st.session_state["walking_distances"]
+    biking_dist_file = '../distances/biking_dist.pkl'
+    driving_dist_file = '../distances/driving_dist.pkl'
+    with open(driving_dist_file, 'rb') as file:
+        driving_distances = pickle.load(file)    
+    with open(biking_dist_file, 'rb') as file:
+        biking_distances = pickle.load(file)
     # read in all pre-calculated distances (for walk, drive, bike)
-    walking_distances = pd.read_csv('../distances/all_walking_distances.csv')
-    biking_distances = pd.read_csv('../distances/all_biking_distances.csv')
-    driving_distances = pd.read_csv('../distances/all_driving_distances.csv')
+    # walking_distances = pd.read_csv('../distances/all_walking_distances.csv')
+    # biking_distances = pd.read_csv('../distances/all_biking_distances.csv')
+    # driving_distances = pd.read_csv('../distances/all_driving_distances.csv')
 
     # distances to dict
     st.session_state["distances_dict"] = {

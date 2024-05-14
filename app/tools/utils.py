@@ -6,6 +6,130 @@ import geopandas as gpd
 import streamlit as st 
 import plotly.graph_objects as go
 import plotly.express as px
+from tqdm import tqdm
+import pandana as pdna
+import os
+
+
+def init_walking_dist():
+    place = 'Montreal, Canada'
+    # list_of_amenities = ['restaurant', 'cafe', 'pharmacy', 'hospital', 'parking']
+    # additional amenities
+    list_of_amenities = [
+        "arts_centre",
+        "atm",
+        "bank",
+        "bar",
+        "bureau_de_change",
+        "cafe",
+        "childcare",
+        "cinema",
+        "clinic",
+        "college",
+        "community_centre",
+        "dentist",
+        "doctors",
+        "events_venue",
+        "fast_food",
+        "fire_station",
+        "hospital",
+        "ice_cream",
+        "kindergarten",
+        "library",
+        "marketplace",
+        "nightclub",
+        "pharmacy",
+        "place_of_worship",
+        "police",
+        "post_box",
+        "post_office",
+        "pub",
+        "public_building",
+        "recycling",
+        "restaurant",
+        "school",
+        "social_centre",
+        "social_facility",
+        "studio",
+        "theatre",
+        "townhall",
+        "university",
+        "veterinary"
+        ]
+    tags = {'amenity': list_of_amenities}
+
+    walk_time = 15  # max walking horizon in minutes
+    walk_speed = 5  # km per hour
+    walk_time_sec = walk_time * 60 # We need the time in seconds to match how travel time is calculated in OSMnx
+    
+    amenities = ox.features_from_place(place, tags=tags)
+    amenities = amenities.to_crs('EPSG:25832')
+
+    # Dictionary to store centroids for each amenity
+    centroids_per_amenity = {}
+
+    # Loop through each amenity category
+    for amenity in list_of_amenities:
+        # Filter amenities for the current category
+        amenities_category = amenities[amenities['amenity'] == amenity]
+        # Calculate centroids for the current category
+        centroids_category = amenities_category.centroid
+        # Store centroids for the current category in the dictionary
+        centroids_per_amenity[amenity] = centroids_category
+
+    # graphs_dir = '/Users/caro/Desktop/SPRING24/GDS/PROJECT/GDS_project/graphs/walk'
+    graphs_dir = '../graphs/walk'
+
+    walking_graphs = {}
+    for file_name in os.listdir(graphs_dir):
+        if file_name.endswith(".graphml"):
+            neighborhood = file_name.replace("G_walk_", "").replace(".graphml", "")
+            file_path = os.path.join(graphs_dir, file_name)
+            G_walk_neighborhood = ox.load_graphml(file_path)
+            walking_graphs[neighborhood] = G_walk_neighborhood
+                
+
+    walk_pandanas = {}
+    # Build Pandana network for each neighborhood
+    for neighborhood, graph in walking_graphs.items():
+        graph = ox.project_graph(graph, to_crs='EPSG:25832')
+        nodes = ox.graph_to_gdfs(graph, edges=False)[['x', 'y']]
+        edges = ox.graph_to_gdfs(graph, nodes=False).reset_index()[['u', 'v', 'travel_time']]
+        
+        network = pdna.Network(node_x=nodes['x'],
+                                node_y=nodes['y'], 
+                                edge_from=edges['u'],
+                                edge_to=edges['v'],
+                                edge_weights=edges[['travel_time']])
+        
+        walk_pandanas[neighborhood] = network
+
+
+    walking_distances = {}  # Initialize an empty dictionary to store distances for each amenity
+
+    for amenity in list_of_amenities:
+        walking_distances[amenity] = {}
+
+        for neighborhood, pandana in tqdm(walk_pandanas.items()):
+            # Set points of interest (POIs) for the current amenity in the current neighborhood
+            pandana.set_pois(category=amenity,  # Set the current amenity category dynamically
+                            maxdist=walk_time_sec,
+                            maxitems=3,
+                            x_col=centroids_per_amenity[amenity].x,  # Use the centroid of the current amenity
+                            y_col=centroids_per_amenity[amenity].y)
+            
+            # Find the nearest POIs for the current amenity in the current neighborhood
+            distances = pandana.nearest_pois(distance=walk_time_sec,
+                                            category=amenity,  # Set the current amenity category dynamically
+                                            num_pois=3)
+            
+            # Convert travel time from seconds to minutes
+            distances['travel_time'] = distances[1] / 60
+            
+            # Store the distances for the current amenity in the current neighborhood
+            walking_distances[amenity][neighborhood] = distances
+    
+    return walking_distances
 
 
 # support function
@@ -220,38 +344,6 @@ def amenity_distances_map():
 
 
 # used in neighbourhood analysis
-# def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_transportation, graphs_dict, amenity):
-    
-#     # Load the appropriate graph based on the transportation type
-#     if transportation_type == "walking":
-#         G = graphs_dict["walking"][f"{neighbourhood}, Montreal, Canada"]
-#     elif transportation_type == "driving":
-#         G = graphs_dict["driving"][f"{neighbourhood}, Montreal, Canada"]
-#     elif transportation_type == "biking":
-#         G = graphs_dict["biking"][f"{neighbourhood}, Montreal, Canada"]
-    
-#     # CRS
-#     G_proj = ox.project_graph(G)
-    
-#     distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
-#     distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
-#     # distances = distances_by_transportation[amenity][f"{neighbourhood}, Montreal, Canada"]
-    
-#     # Plot the graph with a light background
-#     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
-    
-#     # Assuming 'nodes_anjou' is a DataFrame containing node positions and 'distances_anjou' contains the data to plot
-#     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
-    
-#     # Scatter plot on the same Axes instance
-#     sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=30, cmap='inferno_r', alpha=0.8)
-    
-#     # Add colorbar
-#     plt.colorbar(sc, ax=ax, shrink=0.7)
-    
-#     # Show the plot
-#     st.pyplot(fig)
-    
 def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_transportation, graphs_dict, amenity):
     
     # Load the appropriate graph based on the transportation type
@@ -265,16 +357,14 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
     # CRS
     G_proj = ox.project_graph(G)
     
-    distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
-    distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
+    # distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
+    # distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
+    distances = distances_by_transportation[amenity][f"{neighbourhood}, Montreal, Canada"]
     
     # Plot the graph with a light background
     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
     
     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
-    
-    # Merge the nodes_proj and distances DataFrames based on a common key
-    # merged_data = nodes_proj.merge(distances, left_on='osmid', right_on='node')
     
     # Scatter plot on the same Axes instance
     sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=30, cmap='inferno_r', alpha=0.8)
@@ -284,42 +374,3 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
     
     # Show the plot
     st.pyplot(fig)
-
-    
-# #OLD VERSION
-# def plot_neighborhood_graph(mot, mot_distances, neighbourhood, amenity, graphs_dict):
-#     # Load the graph from the specified place and network type
-#     # G = mot_graph
-#     # Load the appropriate graph based on the transportation type
-#     if mot == "walking":
-#         G = graphs_dict["walking"][f"{neighbourhood}, Montreal, Canada"]
-#     elif mot == "driving":
-#         G = graphs_dict["driving"][f"{neighbourhood}, Montreal, Canada"]
-#     elif mot == "biking":
-#         G = graphs_dict["biking"][f"{neighbourhood}, Montreal, Canada"]
-    
-#     st.write(G)
-    
-#     # CRS
-#     G_proj = ox.project_graph(G)
-    
-#     distances = mot_distances[mot_distances["amenity"] == amenity]
-#     distances = distances[f"{neighbourhood}, Montreal, Canada"]
-    
-#     # Plot the graph with a light background
-#     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)
-    
-#     # Assuming 'nodes_anjou' is a DataFrame containing node positions and 'distances_anjou' contains the data to plot
-#     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
-    
-#     # Scatter plot on the same Axes instance
-#     sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=50, cmap='inferno_r', alpha=0.8)
-    
-#     # Add colorbar
-#     plt.colorbar(sc, ax=ax, shrink=0.7)
-    
-#     # Show the plot
-#     st.pyplot(fig)
-
-#     # example usage
-#     # plot_neighborhood_graph(G_walk_anjou, 'Anjou')
