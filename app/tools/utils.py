@@ -368,10 +368,14 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
     
     # Scatter plot on the same Axes instance
-    sc = ax.scatter(x=nodes_proj["x"], y=nodes_proj["y"], c=distances['travel_time'], s=30, cmap='inferno_r', alpha=0.8)
+    sc = ax.scatter(x=nodes_proj['x'], y=nodes_proj['y'], c=distances['travel_time'], s=30, cmap='inferno_r', alpha=0.8, vmin=0, vmax=15)
     
-    # Add colorbar
-    plt.colorbar(sc, ax=ax, shrink=0.7)
+    # Create a colorbar
+    cbar = plt.colorbar(sc, ax=ax, shrink=0.7)
+    
+    # Set the colorbar ticks and tick labels
+    cbar.set_ticks(range(0, 16))
+    cbar.set_ticklabels(range(0, 16))
     
     # Show the plot
     st.pyplot(fig)
