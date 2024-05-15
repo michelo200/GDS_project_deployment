@@ -37,19 +37,70 @@ with col3:
     if group_radio == "Young adults":
         st.write("**Potential interests**: Career advancement, education, socializing, dating, exploring personal identity, adventure.")
         st.write("**Potential needs**: Higher education or vocational training, job opportunities, financial independence, relationship building, autonomy, self-discovery.")
-    
+
+        st.write("Winning neighbourhoods:")
+        st.markdown("1. Ville-Marie")
+        st.markdown("2. Côte-des-Neiges–Notre-Dame-de-Grâce")
+        st.markdown("3. Le Plateau-Mont-Royal")
+
+        st.markdown('''
+        <style>
+        [data-testid="stMarkdownContainer"] ul{
+            list-style-position: inside;
+        }
+        </style>
+        ''', unsafe_allow_html=True)
+        
     if group_radio == "Families with children":
         st.write("**Potential interests**: Family activities, child development, community involvement, recreation, play, exploration.")
         st.write("**Potential needs**: Childcare, quality education, family-friendly environment, recreational facilities, safety, social support, work-life balance, parental guidance.")
+        
+        st.write("Winning neighbourhoods:")
+        st.markdown("1. Rosemont–La Petite-Patrie")
+        st.markdown("2. Côte-des-Neiges–Notre-Dame-de-Grâce")
+        st.markdown("3. Villeray–Saint-Michel–Parc-Extension")
+
+        st.markdown('''
+        <style>
+        [data-testid="stMarkdownContainer"] ul{
+            list-style-position: inside;
+        }
+        </style>
+        ''', unsafe_allow_html=True)
         
     if group_radio == "Young professionals":
         st.write("**Potential interests**: Job opportunities, family, personal growth, hobbies, community involvement, maintaining health and well-being.")
         st.write("**Potential needs**: Career progression or stability, family support, financial security, health care, stress management, maintaining social connections.")
 
+        st.write("Winning neighbourhoods:")
+        st.markdown("1. Saint-Laurent")
+        st.markdown("2. Saint-Léonard")
+        st.markdown("3. Ville-Marie")
+
+        st.markdown('''
+        <style>
+        [data-testid="stMarkdownContainer"] ul{
+            list-style-position: inside;
+        }
+        </style>
+        ''', unsafe_allow_html=True)
+        
     if group_radio == "Elderly":
         st.write("**Potential interests**: Retirement activities, leisure pursuits, spending time with family and friends, lifelong learning, travel, culture.")
         st.write("**Potential needs**: Health care, financial stability, social support, access to age-appropriate services, opportunities for continued personal growth and engagement.")
+        
+        st.write("Winning neighbourhoods:")
+        st.markdown("1. Côte-des-Neiges–Notre-Dame-de-Grâce")
+        st.markdown("2. Ahuntsic-Cartierville")
+        st.markdown("3. Rosemont–La Petite-Patrie")
 
+        st.markdown('''
+        <style>
+        [data-testid="stMarkdownContainer"] ul{
+            list-style-position: inside;
+        }
+        </style>
+        ''', unsafe_allow_html=True)
 
 
 st.divider()
