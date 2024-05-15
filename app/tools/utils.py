@@ -44,6 +44,15 @@ def amenity_dataframe():
     df = pd.DataFrame(amenities_with_neighborhood)
     df.rename(columns={"Arrondissement": "neighbourhood", "distance_in_m": "distance_in_m_from_center"}, inplace=True)
     
+    amenities_with_neighborhood = gpd.read_file('../dataframes/amenities_with_neighborhood.geojson')
+
+    neighbourhoods = list(amenities_with_neighborhood['Arrondissement'].unique())[:-1]
+    neighbourhoods = sorted([item.split(',')[0] for item in neighbourhoods])
+
+    amenities = sorted(amenities_with_neighborhood.amenity.unique())
+    
+    categories = sorted(amenities_with_neighborhood.category.dropna().unique())
+    
     st.write("Here you have to possibility to browse through all amenity and neighbourhood data below.")
     st.write("**Filter by category, amenity, and neighbourhood, if you like.**")
 
@@ -54,13 +63,13 @@ def amenity_dataframe():
         filter_type = st.radio("Filter by:", ("Amenity", "Category"), key="filter_type")
         
         if filter_type == "Amenity":
-            amenity_selectbox = st.selectbox("Select Amenity:", [''] + df['amenity'].unique().tolist(), key="amenity_selectbox")
+            amenity_selectbox = st.selectbox("Select Amenity:", [''] + amenities, key="amenity_selectbox")
             filtered_df = df[df['amenity'] == amenity_selectbox] if amenity_selectbox else df
         else:
-            category_selectbox = st.selectbox("Select Category:", [''] + df['category'].unique().tolist(), key="category_selectbox")
+            category_selectbox = st.selectbox("Select Category:", [''] + categories, key="category_selectbox")
             filtered_df = df[df['category'] == category_selectbox] if category_selectbox else df
         
-        neighbourhood_selectbox = st.selectbox("Select Neighbourhood:", [''] + df['neighbourhood'].unique().tolist(), key="neighbourhood_selectbox")
+        neighbourhood_selectbox = st.selectbox("Select Neighbourhood:", [''] + neighbourhoods, key="neighbourhood_selectbox")
         if neighbourhood_selectbox:
             filtered_df = filtered_df[filtered_df['neighbourhood'] == neighbourhood_selectbox]
 
@@ -80,6 +89,15 @@ def amenity_plot():
     df = pd.DataFrame(amenities_with_neighborhood)
     df.rename(columns={"Arrondissement": "neighbourhood", "distance_in_m": "distance_in_m_from_center"}, inplace=True)
     
+    amenities_with_neighborhood = gpd.read_file('../dataframes/amenities_with_neighborhood.geojson')
+
+    neighbourhoods = list(amenities_with_neighborhood['Arrondissement'].unique())[:-1]
+    neighbourhoods = sorted([item.split(',')[0] for item in neighbourhoods])
+
+    amenities = sorted(amenities_with_neighborhood.amenity.unique())
+    
+    categories = sorted(amenities_with_neighborhood.category.dropna().unique())
+    
     col1, col2 = st.columns(2)
 
     with col1:
@@ -87,10 +105,10 @@ def amenity_plot():
 
     with col2:
         if filter_type == "Amenity":
-            selected_filter = st.selectbox("Select Amenity:", [''] + df['amenity'].unique().tolist())
+            selected_filter = st.selectbox("Select Amenity:", [''] + amenities)
             filtered_df = df[df['amenity'] == selected_filter] if selected_filter else df
         else:
-            selected_filter = st.selectbox("Select Category:", [''] + df['category'].unique().tolist())
+            selected_filter = st.selectbox("Select Category:", [''] + categories)
             filtered_df = df[df['category'] == selected_filter] if selected_filter else df
 
     # occurrences based on the selected filter and neighborhood
@@ -165,7 +183,7 @@ def amenity_distances_map():
         zmin=0,
         zmax=5500 # legend values
     ))
-t
+
     fig.update_layout(
         title=f'Average Distance to Amenity in Montreal',
         mapbox=dict(

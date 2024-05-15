@@ -28,9 +28,9 @@ st.write("Time in minutes to reach the nearest selected amenity by selected mode
 amenities_with_neighborhood = gpd.read_file('../dataframes/amenities_with_neighborhood.geojson')
 
 neighbourhoods = list(amenities_with_neighborhood['Arrondissement'].unique())[:-1]
-neighbourhoods = [item.split(',')[0] for item in neighbourhoods]
+neighbourhoods = sorted([item.split(',')[0] for item in neighbourhoods])
 
-amenities = amenities_with_neighborhood.amenity.unique()
+amenities = sorted(amenities_with_neighborhood.amenity.unique())
 
 # store distances in session state for use in plotting
 if "distances_dict" not in st.session_state:
