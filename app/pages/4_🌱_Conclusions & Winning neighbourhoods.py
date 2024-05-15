@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 
 from tools.ui_utils import (
     add_logo,
@@ -9,38 +10,49 @@ add_logo()
 ui_setup()
 st.sidebar.write("Choose different site options above.")
 
-
 st.subheader("Conclusions & Winning neighbourhoods")
+st.divider()
 
-st.write("**The best neighbouhoods for:**")
-
-col1, col2 = st.columns([1, 4])
+col1, col2, col3 = st.columns([5, 1, 9])
 with col1:
-    st.slider("Slide to your age", min = 0, max = 100, value = 30, step = 1)
-
-group_radio = st.radio("Select your group", ["Families with children", "Young adults", "Young professionals", "Elderly"])
-if group_radio == "Young adults":
-    st.write("**Young adults**")
-    Interests: Career advancement, education, socializing, dating, exploring personal identity, adventure.
-Needs: Higher education or vocational training, job opportunities, financial independence, relationship building, autonomy, self-discovery.
+    group_radio = st.radio("Select the group you are interested to explore", ["Families with children", "Young adults", "Young professionals", "Elderly"])
     
-if group_radio == "Families with children":
-    st.write("**Families with children**")
-    Interests: Career stability, family, personal growth, hobbies, community involvement, maintaining health and well-being.
-Needs: Career progression or stability, family support, financial security, health care, stress management, maintaining social connections.
-Interests: Play, exploration, learning, creativity, socializing, imagination.
-Needs: Education, parental guidance, emotional support, safety, opportunities for skill development, exploration of interests.
-
-if group_radio == "Business people":
-    st.write("**Business people**")
-
-if group_radio == "Elderly":
-    st.write("**Elderly**")
-    Interests: Retirement activities, leisure pursuits, spending time with family and friends, lifelong learning, travel.
-Needs: Health care, financial stability, social support, access to age-appropriate services, opportunities for continued personal growth and engagement.
+    if group_radio == "Young adults":
+        image = Image.open("visuals/young_adults.png")
+        st.image(image, width=220)
     
+    if group_radio == "Families with children":
+        image = Image.open("visuals/families.png")
+        st.image(image, width=220)
+    
+    if group_radio == "Young professionals":
+        image = Image.open("visuals/young-professionals.png")
+        st.image(image, width=220)
+    
+    if group_radio == "Elderly":
+        image = Image.open("visuals/elderly.png")
+        st.image(image, width=220)
+    
+with col3:
+    if group_radio == "Young adults":
+        st.write("**Potential interests**: Career advancement, education, socializing, dating, exploring personal identity, adventure.")
+        st.write("**Potential needs**: Higher education or vocational training, job opportunities, financial independence, relationship building, autonomy, self-discovery.")
+    
+    if group_radio == "Families with children":
+        st.write("**Potential interests**: Family activities, child development, community involvement, recreation, play, exploration.")
+        st.write("**Potential needs**: Childcare, quality education, family-friendly environment, recreational facilities, safety, social support, work-life balance, parental guidance.")
+        
+    if group_radio == "Young professionals":
+        st.write("**Potential interests**: Job opportunities, family, personal growth, hobbies, community involvement, maintaining health and well-being.")
+        st.write("**Potential needs**: Career progression or stability, family support, financial security, health care, stress management, maintaining social connections.")
+
+    if group_radio == "Elderly":
+        st.write("**Potential interests**: Retirement activities, leisure pursuits, spending time with family and friends, lifelong learning, travel, culture.")
+        st.write("**Potential needs**: Health care, financial stability, social support, access to age-appropriate services, opportunities for continued personal growth and engagement.")
 
 
+
+st.divider()
 
 st.write("Neighbourhoods and their characteristics")
 details_toggle = st.toggle("Show neighbourhood details", False)
