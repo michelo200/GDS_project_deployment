@@ -358,9 +358,9 @@ def plot_neighborhood_graph(transportation_type, neighbourhood, distances_by_tra
     # CRS
     G_proj = ox.project_graph(G)
     
-    # distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
-    # distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
-    distances = distances_by_transportation[amenity][f"{neighbourhood}, Montreal, Canada"]
+    distances = distances_by_transportation[distances_by_transportation["amenity"] == amenity]
+    distances = distances[distances["neighborhood"] == f"{neighbourhood}, Montreal, Canada"]
+    # distances = distances_by_transportation[amenity][f"{neighbourhood}, Montreal, Canada"]
     
     # Plot the graph with a light background
     fig, ax = ox.plot_graph(G_proj, figsize=(10, 8), bgcolor='white', edge_color='#CCCCCC', edge_linewidth=0.5, node_size=0, show=False, close=False)

@@ -21,9 +21,9 @@ add_logo()
 st.title("MONTREAL - A 15-MINUTE CITY?")
 st.subheader("A Geospatial Data Science project at ITU Copenhagen")
 
-with st.spinner("Initializing the application. This takes 2 minutes 🧘‍♂️"):
-    if "walking_distances" not in st.session_state:
-        st.session_state.walking_distances = init_walking_dist()
+# with st.spinner("Initializing the application. This takes 2 minutes 🧘‍♂️"):
+#     if "walking_distances" not in st.session_state:
+#         st.session_state.walking_distances = init_walking_dist()
 
 ui_setup()
 
