@@ -94,6 +94,8 @@ def amenity_plot():
     neighbourhoods = list(amenities_with_neighborhood['Arrondissement'].unique())[:-1]
     neighbourhoods = sorted([item.split(',')[0] for item in neighbourhoods])
 
+    st.write(neighbourhoods)
+    
     amenities = sorted(amenities_with_neighborhood.amenity.unique())
     
     categories = sorted(amenities_with_neighborhood.category.dropna().unique())
