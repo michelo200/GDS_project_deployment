@@ -8,13 +8,11 @@ from tools.ui_utils import (
     ui_setup
 )
 
-from tools.utils import (
-    amenity_distances_map
-)
 
 add_logo()
 ui_setup()
 st.sidebar.write("Choose different site options above.")
 
 
-st.subheader("Map view analysis")
+st.subheader("Conclusions & Winning neighbourhoods")
+
