@@ -1,11 +1,9 @@
 import streamlit as st
 
-
 from tools.ui_utils import (
     add_logo,
     ui_setup
 )
-
 
 add_logo()
 ui_setup()
@@ -14,21 +12,32 @@ st.sidebar.write("Choose different site options above.")
 
 st.subheader("Conclusions & Winning neighbourhoods")
 
-col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
 st.write("**The best neighbouhoods for:**")
 
-group_radio = st.radio("Select your group", ["Young people", "Families", "Business people", "Elderly"])
-if group_radio == "Young people":
-    st.write("**Young people**")
+col1, col2 = st.columns([1, 4])
+with col1:
+    st.slider("Slide to your age", min = 0, max = 100, value = 30, step = 1)
 
-if group_radio == "Families":
-    st.write("**Families**")
+group_radio = st.radio("Select your group", ["Families with children", "Young adults", "Young professionals", "Elderly"])
+if group_radio == "Young adults":
+    st.write("**Young adults**")
+    Interests: Career advancement, education, socializing, dating, exploring personal identity, adventure.
+Needs: Higher education or vocational training, job opportunities, financial independence, relationship building, autonomy, self-discovery.
+    
+if group_radio == "Families with children":
+    st.write("**Families with children**")
+    Interests: Career stability, family, personal growth, hobbies, community involvement, maintaining health and well-being.
+Needs: Career progression or stability, family support, financial security, health care, stress management, maintaining social connections.
+Interests: Play, exploration, learning, creativity, socializing, imagination.
+Needs: Education, parental guidance, emotional support, safety, opportunities for skill development, exploration of interests.
 
 if group_radio == "Business people":
     st.write("**Business people**")
 
 if group_radio == "Elderly":
     st.write("**Elderly**")
+    Interests: Retirement activities, leisure pursuits, spending time with family and friends, lifelong learning, travel.
+Needs: Health care, financial stability, social support, access to age-appropriate services, opportunities for continued personal growth and engagement.
     
 
 
