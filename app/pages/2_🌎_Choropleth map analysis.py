@@ -1,7 +1,4 @@
 import streamlit as st
-import pandas as pd
-import osmnx as ox
-import geopandas as gpd 
 
 from tools.ui_utils import (
     add_logo,
