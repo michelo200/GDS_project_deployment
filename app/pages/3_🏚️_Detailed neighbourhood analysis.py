@@ -22,7 +22,7 @@ st.write("The output **graph plot** can help you to **find the best areas within
 
 st.divider()
 st.write("The plot displays:")
-st.write("Time in minutes to reach the nearest selected amenity by selected mode of transportation.")
+st.write("**Time in minutes** to reach the **nearest selected amenity by selected mode of transportation**.")
 
 # store all neighborhoods
 amenities_with_neighborhood = gpd.read_file('../dataframes/amenities_with_neighborhood.geojson')
