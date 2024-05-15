@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-
+# deploy button removal
 def ui_setup():
     # Removing 'Deploy' button from the top right corner for cooler demo experience
     st.markdown("""
@@ -16,6 +16,7 @@ def ui_setup():
         </style>
     """, unsafe_allow_html=True)
 
+# itu logo
 def add_logo():
     image_path = "visuals/itu-logo.png"
     left, middle, right = st.columns([10,1,5])
