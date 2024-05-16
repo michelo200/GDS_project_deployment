@@ -36,6 +36,28 @@ def get_amenity_data():
     return amenities_with_neighborhood, polygons
 
 
+# used in welcome page
+def neighbourhood_map():
+    df2 = gpd.read_file('../dataframes/quartiers_sociologiques_2014.geojson') # quartier data
+    
+    df2 = df2.to_crs(crs=4326)
+    district_centroids_2 = df2.copy()
+    district_centroids_2['centroid'] = district_centroids_2['geometry'].centroid
+    df2 = df2.to_crs(crs=4326)
+    district_centroids_2 = district_centroids_2.groupby('Abreviation').agg(
+        arrondissement=('Arrondissement', 'first'),
+        id=('id', 'first'),
+        centroid=('centroid', 'first')
+    ).reset_index()
+    
+    fig = px.choropleth_mapbox(df2, geojson=df2.geometry.__geo_interface__, locations=df2.index, color="Arrondissement",
+                            center={"lat": 45.55, "lon": -73.65},
+                            mapbox_style="carto-positron", zoom=10)
+
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    st.plotly_chart(fig, use_container_width=True)
+
+
 # used in statistics view
 def amenity_dataframe():
     st.divider()
@@ -365,7 +387,7 @@ def neighbourhoods_by_group():
             st.write("**Potential interests**: Retirement activities, leisure pursuits, spending time with family and friends, lifelong learning, travel, culture.")
             st.write("**Potential needs**: Health care, financial stability, social support, access to age-appropriate services, opportunities for continued personal growth and engagement.")
             
-            st.write("*Winning neighbourhoods with public services, healthcare, and restaurants/cafés accessible in not time with a car*:")
+            st.write("*Winning neighbourhoods with public services, healthcare, and restaurants/cafés accessible in no time with a car*:")
             st.markdown("1. Côte-des-Neiges–Notre-Dame-de-Grâce")
             st.markdown("2. Ahuntsic-Cartierville")
             st.markdown("3. Rosemont–La Petite-Patrie")

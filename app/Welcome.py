@@ -2,7 +2,11 @@ import streamlit as st
 import pandas as pd
 from tools.ui_utils import (
     add_logo,
-    ui_setup
+    ui_setup,
+)
+
+from tools.utils import (
+    neighbourhood_map
 )
 
 st.set_page_config(page_title='Montreal-15-minute-city', page_icon=":earth_americas:",layout="wide")
@@ -27,9 +31,7 @@ st.write("This project serves as a inspiration for people, who want to move or r
 st.divider()
 st.write("Now it's up to you - walk through the app pages and analyse the city. We'll provide you with the best living locations.")
 
-st.write("NEIGHBOURHOOD MAP COMING SOON... (CARO'S CODE)")
-
-st.map(montreal_map, zoom=10)
+neighbourhood_map()
 
 
 st.sidebar.write("Choose different site options above.")
