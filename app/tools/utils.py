@@ -317,19 +317,19 @@ def neighbourhoods_by_group():
         
         if group_radio == "Young adults":
             image = Image.open("visuals/young_adults.png")
-            st.image(image, width=220)
+            st.image(image, width=250)
         
         if group_radio == "Families with children":
             image = Image.open("visuals/families.png")
-            st.image(image, width=220)
+            st.image(image, width=250)
         
         if group_radio == "Young professionals":
             image = Image.open("visuals/young-professionals.png")
-            st.image(image, width=220)
+            st.image(image, width=250)
         
         if group_radio == "Elderly":
             image = Image.open("visuals/elderly.png")
-            st.image(image, width=220)
+            st.image(image, width=250)
         
     with col3:
         if group_radio == "Young adults":
