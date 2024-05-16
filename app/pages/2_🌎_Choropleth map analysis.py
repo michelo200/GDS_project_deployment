@@ -21,7 +21,7 @@ st.write("This will give you a first indication about your favourite neighbourho
 st.divider()
 
 # basic map viz
-st.write("COMING SOON FROM EMMAS CODE...")
+st.write("Amenities by neighbourhood - COMING SOON FROM EMMAS CODE...")
 
 
 st.divider()
