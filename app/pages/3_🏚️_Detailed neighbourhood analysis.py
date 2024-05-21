@@ -25,7 +25,7 @@ st.write("The plot displays:")
 st.write("**Time in minutes** to reach the **nearest selected amenity by selected mode of transportation**.")
 
 # store all neighborhoods
-amenities_with_neighborhood = gpd.read_file('../dataframes/amenities_with_neighborhood.geojson')
+amenities_with_neighborhood = gpd.read_file('dataframes/amenities_with_neighborhood.geojson')
 
 neighbourhoods = list(amenities_with_neighborhood['Arrondissement'].unique())[:-1]
 neighbourhoods = sorted([item.split(',')[0] for item in neighbourhoods])
@@ -35,9 +35,9 @@ amenities = sorted(amenities_with_neighborhood.amenity.unique())
 # store distances in session state for use in plotting
 if "distances_dict" not in st.session_state:
 
-    walking_distances = pd.read_parquet('../distances/walking_distances.parquet')
-    biking_distances = pd.read_parquet('../distances/biking_distances.parquet')
-    driving_distances = pd.read_parquet('../distances/driving_distances.parquet')
+    walking_distances = pd.read_parquet('distances/walking_distances.parquet')
+    biking_distances = pd.read_parquet('distances/biking_distances.parquet')
+    driving_distances = pd.read_parquet('distances/driving_distances.parquet')
 
     # distances to dict
     st.session_state["distances_dict"] = {
@@ -49,9 +49,9 @@ if "distances_dict" not in st.session_state:
 # store graphs in session state for use in plotting
 if "graphs_dict" not in st.session_state:
     
-    biking_graphs_file = '../graphs/biking_graphs.pkl'
-    walking_graphs_file = '../graphs/walking_graphs.pkl'
-    driving_graphs_file = '../graphs/driving_graphs.pkl'
+    biking_graphs_file = 'graphs/biking_graphs.pkl'
+    walking_graphs_file = 'graphs/walking_graphs.pkl'
+    driving_graphs_file = 'graphs/driving_graphs.pkl'
     with open(driving_graphs_file, 'rb') as file:
         driving_graphs = pickle.load(file)    
     with open(walking_graphs_file, 'rb') as file:

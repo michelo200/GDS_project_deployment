@@ -11,10 +11,10 @@ from PIL import Image
 
 # support function
 def get_amenity_data():
-    pois = gpd.read_file("../dataframes/clean_pois_montreal.geojson")
+    pois = gpd.read_file("dataframes/clean_pois_montreal.geojson")
     pois['geometry'] = pois['geometry'].centroid
     
-    polygons = gpd.read_file("../dataframes/district_polygons.geojson")
+    polygons = gpd.read_file("dataframes/district_polygons.geojson")
     polygons['centroids'] = polygons['geometry'].centroid
     centroids = gpd.GeoDataFrame(polygons, geometry='centroids')
     
@@ -38,7 +38,7 @@ def get_amenity_data():
 
 # used in welcome page
 def neighbourhood_map():
-    df2 = gpd.read_file('../dataframes/quartiers_sociologiques_2014.geojson') # quartier data
+    df2 = gpd.read_file('dataframes/quartiers_sociologiques_2014.geojson') # quartier data
     
     df2 = df2.to_crs(crs=4326)
     district_centroids_2 = df2.copy()
@@ -67,7 +67,7 @@ def amenity_dataframe():
     df = pd.DataFrame(amenities_with_neighborhood)
     df.rename(columns={"Arrondissement": "neighbourhood", "distance_in_m": "distance_in_m_from_center"}, inplace=True)
     
-    amenities_with_neighborhood = gpd.read_file('../dataframes/amenities_with_neighborhood.geojson')
+    amenities_with_neighborhood = gpd.read_file('dataframes/amenities_with_neighborhood.geojson')
 
     neighbourhoods = list(amenities_with_neighborhood['Arrondissement'].unique())[:-1]
     neighbourhoods = sorted([item.split(',')[0] for item in neighbourhoods])
@@ -111,7 +111,7 @@ def amenity_plot():
     df = pd.DataFrame(amenities_with_neighborhood)
     df.rename(columns={"Arrondissement": "neighbourhood", "distance_in_m": "distance_in_m_from_center"}, inplace=True)
     
-    amenities_with_neighborhood = gpd.read_file('../dataframes/amenities_with_neighborhood.geojson')
+    amenities_with_neighborhood = gpd.read_file('dataframes/amenities_with_neighborhood.geojson')
 
     neighbourhoods = list(amenities_with_neighborhood['Arrondissement'].unique())[:-1]
     neighbourhoods = sorted([item.split(',')[0] for item in neighbourhoods])
