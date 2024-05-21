@@ -17,7 +17,7 @@ st.subheader("Amenities in Montreal")
 st.write("In this page you can get a feeling for the distribution of amenities across the neighbourhoods of Montreal.")
 st.write("**The barplot** below shows the number of amenities per neighbourhood.")
 st.write("**The dataframe** gives you the opportunity to look into single amenities and even look them up on google maps, if you are interested in more information about the location.")
-
+st.write("**Filter by category, amenity, and neighbourhood, if you like.**")
 
 st.divider()
 

@@ -27,6 +27,8 @@ amenity_neighbourhood_map()
 
 st.divider()
 
+st.write("Filter by your favourite amenity category in this plot.")
+
 # distance by amenity and district plotting
 amenity_distances_map()
 

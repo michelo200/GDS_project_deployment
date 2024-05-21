@@ -26,11 +26,12 @@ ui_setup()
 
 st.write("**May 2024**")
 st.write("**Authors:** Emma Stoklund Lee, Carolina Branas Soria, and Michel Poesze")
-st.write("This project serves as a inspiration for people, who want to move or relocate in Montreal. Based on the concept of the 15-minute city we want to help finding the best address to live within the city. In the different pages, users are able to choose their **amenity of interest** and the **mode of transportation** they want to use. Visualisations and our conclusions will help to find the best neighbourhoods to live in Montreal.")
+st.write("This project serves as a inspiration for people, who want to move or relocate in Montreal, Canada. Based on the concept of the 15-minute city we want to help finding the best address to live within Montreal. In the different pages, users are able to choose their **amenity of interest** and the **mode of transportation** they want to use primarily.")
+st.write("Provided visualisations and our conclusions will help to find the best neighbourhoods to live in the city.")
 
 st.divider()
 st.write("Now it's up to you - walk through the app pages and analyse the city. We'll provide you with the best living locations.")
-
+st.write("*Here's a first overview of the neighbourhoods of Montreal:*")
 neighbourhood_map()
 
 

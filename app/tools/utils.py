@@ -77,7 +77,6 @@ def amenity_dataframe():
     categories = sorted(amenities_with_neighborhood.category.dropna().unique())
     
     st.write("Here you have to possibility to browse through all amenity and neighbourhood data below.")
-    st.write("**Filter by category, amenity, and neighbourhood, if you like.**")
 
     # columns for the filter type, specific filter, and reset button
     col1, col2 = st.columns([1, 3])
