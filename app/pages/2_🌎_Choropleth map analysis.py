@@ -6,7 +6,8 @@ from tools.ui_utils import (
 )
 
 from tools.utils import (
-    amenity_distances_map
+    amenity_distances_map,
+    amenity_neighbourhood_map
 )
 
 add_logo()
@@ -20,8 +21,8 @@ st.write("This will give you a first indication about your favourite neighbourho
 
 st.divider()
 
-# basic map viz
-st.write("Amenities by neighbourhood - COMING SOON FROM EMMAS CODE...")
+# basic map vis of amenities by neighbourhood
+amenity_neighbourhood_map()
 
 
 st.divider()

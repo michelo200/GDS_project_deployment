@@ -156,6 +156,46 @@ def amenity_plot():
 
 
 # used in map view analysis
+def amenity_neighbourhood_map():
+    amenities_with_neighborhood, polygons = get_amenity_data()
+    amenities_count = amenities_with_neighborhood.groupby('Arrondissement').size().reset_index(name='amenities_count')
+    cloropleth_df = pd.merge(amenities_count, polygons, left_on='Arrondissement', right_on='Arrondissement', how='left')
+    
+    # convert the df to geodataframe
+    cloropleth_gdf = gpd.GeoDataFrame(cloropleth_df, geometry='geometry')
+
+    # create a choropleth map of the count of amenities in each neighbourhood
+    fig = go.Figure()
+
+    # Add choropleth map trace
+    fig.add_trace(go.Choroplethmapbox(
+        geojson=cloropleth_gdf.geometry.__geo_interface__,
+        locations=cloropleth_gdf.index,
+        z=cloropleth_gdf['amenities_count'],
+        colorscale='Viridis',
+        colorbar=dict(title='Number of Amenities'),
+        marker_opacity=0.7,
+        marker_line_width=0,
+        text=cloropleth_gdf['Arrondissement'],
+        hoverinfo='text+z',
+        reversescale=True # comment out for reversed color scale
+    ))
+
+    # Update layout
+    fig.update_layout(
+        title='Number of Amenities in Montreal by Neighbourhood',
+        mapbox=dict(
+            style="carto-positron",
+            zoom=9.4,
+            center=dict(lat=45.55, lon=-73.6),
+        ),
+        margin=dict(l=0, r=0, t=50, b=0),
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
+# used in map view analysis
 def amenity_distances_map():
     amenities_with_neighborhood, polygons = get_amenity_data()
 
